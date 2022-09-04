@@ -10,6 +10,21 @@ let db,
   dbName = 'sample_mflix',
   collection;
 
+MongoClient.connect(dbConnectionString)
+  .then(client => {
+    db = client.db(dbName);
+    collection = db.collection('movies');
+    console.log(`Connected to ${dbName} database`);
+  }).catch(error => {
+    console.error(error);
+  });
+
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors());
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
